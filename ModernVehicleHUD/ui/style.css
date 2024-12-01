@@ -1,0 +1,243 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap');
+
+:root {
+    --primary-color: #00ff9d;
+    --secondary-color: #00ffcc;
+    --danger-color: #ff3e3e;
+    --warning-color: #ff9f1a;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Orbitron', sans-serif;
+}
+
+body {
+    background: transparent;
+}
+
+.vehicle-hud {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    padding: 20px;
+    color: white;
+    display: none;
+}
+
+.speedometer {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 15px;
+}
+
+.speed-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotate(-90deg);
+}
+
+.speed-bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.05);
+    stroke-width: 2;
+}
+
+.speed-progress {
+    fill: none;
+    stroke: var(--primary-color);
+    stroke-width: 4;
+    stroke-dasharray: 502;
+    stroke-dashoffset: 502;
+    transition: stroke-dashoffset 0.3s ease;
+    filter: drop-shadow(0 0 3px var(--primary-color));
+}
+
+.speed-mark {
+    stroke: rgba(255, 255, 255, 0.2);
+    stroke-width: 2;
+}
+
+.speed-mark.highlight {
+    stroke: var(--primary-color);
+    stroke-width: 3;
+}
+
+.speed-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.speed-number {
+    position: relative;
+    line-height: 1;
+}
+
+.speed-number::after {
+    content: '';
+    position: absolute;
+    width: 120%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    bottom: -5px;
+    left: -10%;
+}
+
+#speed {
+    font-size: 52px;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 0 10px var(--primary-color);
+    display: block;
+}
+
+.speed-unit {
+    margin-top: 8px;
+}
+
+.unit {
+    font-size: 14px;
+    opacity: 0.9;
+    letter-spacing: 2px;
+    display: block;
+    color: var(--primary-color);
+}
+
+.info-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    width: 100%;
+    position: relative;
+}
+
+.info-container::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 10%;
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.metric-box {
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.metric-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    opacity: 0.3;
+}
+
+.gear-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.label {
+    font-size: 11px;
+    opacity: 0.8;
+    display: block;
+    letter-spacing: 2px;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.value {
+    font-size: 38px;
+    color: #fff;
+    font-weight: 700;
+    text-shadow: 0 0 10px var(--primary-color);
+}
+
+.fuel-info {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 8px;
+    padding: 0 2px;
+}
+
+.fuel-percent {
+    font-size: 11px;
+    color: var(--primary-color);
+    opacity: 0.9;
+    margin-top: 5px;
+    display: block;
+    text-align: center;
+}
+
+.progress-container {
+    width: 100%;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: shine 2s infinite;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 100%;
+    transition: width 0.3s ease;
+}
+
+#fuel-level {
+    background: linear-gradient(90deg, var(--danger-color), var(--warning-color));
+    box-shadow: 0 0 5px var(--danger-color);
+}
+
+@keyframes shine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Pulse animation for low fuel */
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.6; }
+    100% { opacity: 1; }
+}
+
+#fuel-level[style*="width: 20"] {
+    animation: pulse 2s infinite;
+}
