@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="vehicle-hud" class="hidden">
+        <div class="hud-container">
+            <div class="main-section">
+                <div class="speed-value">
+                    <span class="number">0</span>
+                    <span class="unit">KM/H</span>
+                </div>
+                <div class="gear-info">
+                    <span class="gear">N</span>
+                </div>
+                <div class="rpm-bar">
+                    <div class="rpm-segments">
+                        <div class="segment"></div>
+                        <div class="segment"></div>
+                        <div class="segment"></div>
+                        <div class="segment"></div>
+                        <div class="segment"></div>
+                        <div class="segment"></div>
+                        <div class="segment"></div>
+                        <div class="segment"></div>
+                        <div class="segment"></div>
+                        <div class="segment"></div>
+                    </div>
+                    <div class="rpm-fill"></div>
+                </div>
+            </div>
+            
+            <div class="stats-container">
+                <div class="stat-bar fuel">
+                    <div class="bar-progress">
+                        <div class="bar-fill"></div>
+                    </div>
+                    <div class="stat-info">
+                        <i class="fas fa-gas-pump"></i>
+                        <span class="value">100%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
