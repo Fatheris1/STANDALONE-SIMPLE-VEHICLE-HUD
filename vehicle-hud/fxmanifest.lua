@@ -5,17 +5,12 @@ name 'vehicle-hud'
 description 'Vehicle HUD'
 version '1.0.0'
 
-shared_scripts {
-    '@es_extended/imports.lua'
-}
+
 
 client_scripts {
     'client.lua'
 }
 
-server_scripts {
-    'server.lua'
-}
 
 ui_page 'ui/index.html'
 

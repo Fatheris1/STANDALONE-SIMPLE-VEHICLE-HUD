@@ -1,52 +1,48 @@
-ESX = exports["es_extended"]:getSharedObject()
+-- Created function to start the HUD loop
+local function startVehicleUI(isInVehicle)
+    while isInVehicle do
+        Wait(100) -- Uptade hud status 100ms steel smooth and less cpu usage
 
--- Update HUD
-local isInVehicle = false
-
-Citizen.CreateThread(function()
-    while true do
         local ped = PlayerPedId()
-        
-        if IsPedInAnyVehicle(ped, false) then
-            if not isInVehicle then
-                isInVehicle = true
-            end
-            
-            -- Get vehicle data
-            local vehicle = GetVehiclePedIsIn(ped, false)
-            local speed = GetEntitySpeed(vehicle) * 3.6 -- Convert to km/h
-            local fuel = GetVehicleFuelLevel(vehicle)
-            
-            -- Get current gear
-            local gear = GetVehicleCurrentGear(vehicle)
-            if gear == 0 and speed > 0 then
-                gear = 'R'
-            elseif gear == 0 then
-                gear = 'N'
-            end
-            
-            -- Get RPM (0.0 to 1.0)
-            local rpm = GetVehicleCurrentRpm(vehicle)
-            
-            -- Send all data to UI
+        local vehicle = GetVehiclePedIsIn(ped, false)
+        if not vehicle or not DoesEntityExist(vehicle) then
             SendNUIMessage({
                 type = 'updateVehicleHud',
-                show = true,
-                speed = speed,
-                fuel = fuel,
-                gear = gear,
-                rpm = rpm
+                show = false
             })
-        else
-            if isInVehicle then
-                isInVehicle = false
-                SendNUIMessage({
-                    type = 'updateVehicleHud',
-                    show = false
-                })
-            end
+            break -- Exit if there is no vehicle (Stops de loop and hide the HUD)
         end
-        
-        Citizen.Wait(50) -- Update 20 times per second for smoother RPM
+
+        -- Get actual speed in km/h better rounding
+        local speed = math.floor(GetEntitySpeed(vehicle) * 3.6)
+
+        -- Get fuel level better rounding
+        local fuel = math.floor(GetVehicleFuelLevel(vehicle))
+
+        -- Get current gear
+        local gear = GetVehicleCurrentGear(vehicle)
+
+        -- Get RPM of the vehicle (0 - 1)
+        local rpm = GetVehicleCurrentRpm(vehicle)
+
+        -- Send data to the HUD
+        SendNUIMessage({
+            type = 'updateVehicleHud',
+            speed = speed,
+            fuel = fuel,
+            gear = gear,
+            rpm = rpm,
+            show = true
+        })
+    end
+end
+
+-- Use an event to start the HUD loop when the player enters a vehicle if the player isnt in a vehicle not looping all time
+AddEventHandler('gameEventTriggered', function(name, args)
+    if name == "CEventNetworkPlayerEnteredVehicle" then
+        local vehicle = args[2]
+        local ped = PlayerPedId()
+        local isInVehicle = IsPedInAnyVehicle(ped, false) or IsPedInVehicle(ped, vehicle, false)
+        startVehicleUI(isInVehicle)
     end
 end)
