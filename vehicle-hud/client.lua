@@ -1,3 +1,13 @@
+-- Create function to get the fuel level on fuel resources
+local function getFuel(vehicle)
+    if GetResourceState("ox_fuel") == "started" then
+        return math.floor(GetVehicleFuelLevel(vehicle))
+    elseif GetResourceState("LegacyFuel") == "started" then
+        return math.floor(exports["LegacyFuel"]:GetFuel(vehicle))
+    else
+        return 0
+    end
+end
 -- Created function to start the HUD loop
 local function startVehicleUI(isInVehicle)
     while isInVehicle do
@@ -17,7 +27,7 @@ local function startVehicleUI(isInVehicle)
         local speed = math.floor(GetEntitySpeed(vehicle) * 3.6)
 
         -- Get fuel level better rounding
-        local fuel = math.floor(GetVehicleFuelLevel(vehicle))
+        local fuel = getFuel(vehicle)
 
         -- Get current gear
         local gear = GetVehicleCurrentGear(vehicle)
