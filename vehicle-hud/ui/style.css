@@ -1,0 +1,181 @@
+/* Racing HUD */
+:root {
+    --neon-blue: #00ffff;
+    --neon-orange: #ff6600;
+    --bg-dark: rgba(0, 0, 0, 0.8);
+    --accent-color: #ff3300;
+}
+
+/* Modern Vehicle HUD */
+#vehicle-hud {
+    position: fixed;
+    font-family: 'Rajdhani', sans-serif;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Right position (default) */
+.hud-right {
+    bottom: 40px;
+    right: 40px;
+}
+
+/* Left position (near map) */
+.hud-left {
+    bottom: 40px;
+    left: 340px; /* Moved slightly to the right (was 300px) */
+}
+
+.hud-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.main-section {
+    text-align: center;
+    position: relative;
+    padding-right: 20px;
+}
+
+.speed-value {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.speed-value .number {
+    font-size: 64px;
+    font-weight: 700;
+    line-height: 1;
+    color: white;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+.speed-value .unit {
+    font-size: 16px;
+    font-weight: 500;
+    opacity: 0.7;
+    margin-top: -5px;
+}
+
+.unit-toggle {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    color: white;
+    padding: 4px 8px;
+    cursor: pointer;
+    margin-top: 5px;
+    transition: background 0.2s ease;
+}
+
+.unit-toggle:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.gear-info {
+    position: absolute;
+    top: 35%;
+    right: 0;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.stats-container {
+    padding-left: 20px;
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.stat-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.bar-progress {
+    width: 3px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.bar-fill {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #3498db;
+    transition: height 0.3s ease;
+}
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.stat-info i {
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+.stat-info .value {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.rpm-bar {
+    width: 120px;
+    height: 3px;
+    position: relative;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    margin: 8px auto 0;
+}
+
+.rpm-segments {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    gap: 1px;
+}
+
+.segment {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.1);
+    transition: background-color 0.2s ease;
+}
+
+.rpm-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        rgba(255, 255, 255, 0.8) 0%, 
+        rgba(255, 255, 255, 0.8) 75%, 
+        rgba(231, 76, 60, 0.8) 75%
+    );
+    transition: width 0.1s ease;
+}
+
+.hidden {
+    display: none;
+}
